@@ -65,6 +65,7 @@ class Notemodel extends CI_Model{
 		$c->load->database();
         
 		$result=$c->db->query("UPDATE `addnote2` SET datee='$date' , title='$title' , note='$description' , datee='$date'  where id='$id' ");
+		
 
        // mysqli_query($connect,"UPDATE `addnote` SET datee='$date' , title='$title' , note='$description' , datee='$date'  where id='$id' ");
 	   if($result){

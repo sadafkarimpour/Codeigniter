@@ -104,8 +104,9 @@
                 <div class='btn-group'>
              
                
-                <a  class='btn btn-primary' id='editbut' href='" .$PATH."note/edit&id=".  $note->id."&page=$page'>ویرایش</a>
-                <a class='btn btn-danger' href='" .$PATH."note/delete&id=".  $note->id."&page=$page'>حذف</a>
+				<a  class='btn btn-primary' id='editbut' href='" .$PATH."note/edit/".$note->id."/".$page."'>ویرایش</a>
+
+                <a class='btn btn-danger' href='" .$PATH."note/delete?id=".$note->id."?page=$page'>حذف</a>
                 
                 </div>
                 " 
