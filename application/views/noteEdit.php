@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$c = &get_instance();
-$c->input->get('page');
+
 // $page=$_GET['page'];
 
 ?>
@@ -20,12 +19,12 @@ $c->input->get('page');
     <div  class=' w-50  bg-dark text-white rounded' style='margin-top:160px;height:300px;padding-top:35px;margin-left:400px'>
 <div class="container-fluid " style="margin-left: 180px;">
 <div class="row">
-<input id="title" type="text" placeholder="عنوان یادداشت" name="data[title]" class="w-50 p-2 m-3 " value="<?php echo $row['title']; ?>" >
+<input id="title" type="text" placeholder="عنوان یادداشت" name="data[title]" class="w-50 p-2 m-3 " value="<?php echo $row->title; ?>" >
 </div>
 </div>
 <div class="container-fluid " style="margin-left: 180px;">
 <div class="row">
-<input id="note" type="text" placeholder="متن یادداشت" name="data[note]"  class="w-50 p-2 m-3 " value="<?php echo $row['note']; ?>">
+<input id="note" type="text" placeholder="متن یادداشت" name="data[note]"  class="w-50 p-2 m-3 " value="<?php echo $row->note; ?>">
 </div>
 </div>
 <div class="container-fluid" style="margin-left: 180px;">
@@ -51,7 +50,7 @@ function editbut(){
         url:url,
         type:'POST',
         data:{
-
+            
             id:<?php  echo $id?>,
             title:title,
             note:note,  
@@ -64,7 +63,7 @@ function editbut(){
               //  $('#addform').find('input:text').val('');
                 $('#success').show();
                 $('#success').html('note added successfuly!'); 
-                location.href = "<?php echo $PATH?>note/index&page=<?php echo $page?>";
+                location.href = "<?php echo $PATH?>note/index?page=<?php echo $page1?>";
                
             }
             else if(data.statusCode==201){

@@ -109,28 +109,28 @@ public function search(){
 
 // ----------------------------------------------------------------------------
 
-public function edit(){
+public function edit($id, $page){
 
 	$this->load->view("header");
 	$path= "http://localhost/codeigniter/"; 
 	session_start();
+	$this->load->database();
 		$data = [
 			'PATH' => $path,
 			'siteUrl' => $path."index.php/note",
 			'siteUrlauth' => $path."index.php/auth",
 			'siteUrlreg' => $path."index.php/auth/register",
 			'siteUrllogout' => $path."index.php/auth/logout",
-			'page1'=>$this->input->get('page'),
-			'usid'=>$_SESSION["id"],
+			'page1'=>$page,
+			'id'=>$id,
+			
 		];
 	$this->load->view("menu", $data);
-  $this->load->database();
-  $id=$this->input->get('id');
+
   $query=$this->db->query("select * from `addnote2` where id='$id' ");
-  foreach ($query->result() as $row)
-  {
-		  $this->load->view('noteEdit',$data);
-  }
+  $data['row'] = $query->row();
+  $this->load->view('noteEdit',$data);
+
   $this->load->view("footer");
   
 // $id=$_GET['id'];
@@ -146,9 +146,10 @@ public function update(){
 
 	$this->load->database();
 	$id=$this->input->post('id');
+	
     //$id=$_POST['id'];
     date_default_timezone_set('Asia/Tehran');
-	$date =$this->data('Y-m-d H:i:s');
+	$date =date('Y-m-d H:i:s');
     //$date = date('Y-m-d H:i:s'); 
 	$title=$this->input->post('title');
 	$note=$this->input->post('note');
