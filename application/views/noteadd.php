@@ -1,7 +1,7 @@
 
 
 <!-- add form -->
-
+<div class="" id="app">
 <div class=' alert alert-success alert-dismissible ' id='success' style='display:none;margin-top:50px'>
     <div >
 	  <a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a>
@@ -27,12 +27,33 @@
 <div class="row">
     <button class="btn btn-primary col-lg-6  w-25 p-2 m-1" type="button" name="save" id="save" onclick="savebut();" >Save</button>
     <button class="btn btn-outline-primary col-lg-6 w-25 p-2 m-1 " type="button" name="return" id="return" onclick="returnbut();" >Return</button>
+		<button @click="test()">++</button>
 </div>
 </div>
 </div>
 </form>
+</div>
+
 
 <script>
+
+Vue.createApp({
+    data() {
+      return {
+        message: 'Hello Vue!'
+      }
+    },
+		mounted() {
+			alert("sdf")
+		},
+		methods: {
+			test(){
+				alert('sds')
+			}
+		}
+  }).mount('#app')
+
+
 function savebut(){
    // $('#save').attr('disabled','disables');
     var title=$('#title').val();
