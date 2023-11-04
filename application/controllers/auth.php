@@ -53,7 +53,7 @@ public function login(){
 		$data = [
 			'PATH' => $path,
 			'siteUrl' => $path."index.php/note",
-			'siteUrlauth' => $path."index.php/auth",
+			'siteUrlauth' => $path."index.php/auth/login",
 			'siteUrlreg' => $path."index.php/auth/register",
 			'siteUrllogout' => $path."index.php/auth/logout",
 		];
@@ -123,7 +123,8 @@ public function logout(){
     unset($_SESSION["phone_number"]);
     unset($_SESSION["email"]);
     unset($_SESSION["passwordd"]);
-    header('location:index.php');
+	$this->load->view('index.php');
+  
     
 }
 
@@ -141,7 +142,7 @@ public function register(){
 		$data = [
 			'PATH' => $path,
 			'siteUrl' => $path."index.php/note",
-			'siteUrlauth' => $path."index.php/auth",
+			'siteUrlauth' => $path."index.php/auth/login",
 			'siteUrlreg' => $path."index.php/auth/register",
 			'siteUrllogout' => $path."index.php/auth/logout",
 		];

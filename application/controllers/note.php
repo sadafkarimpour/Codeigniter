@@ -8,6 +8,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Note extends CI_Controller {
 
+	// public function __construct(){
+		// check if user logged in
+		// check session
+		// $userIsLoggedIn = false;
+		// if($userIsLoggedIn){
+			// do nothing
+		// } else {
+		// 	// redirect to login page
+	// 	// }
+	// }
+
 /**
  *
  *
@@ -37,7 +48,7 @@ public function index(){
 	$data = [
 		'PATH' => $path,
 		'siteUrl' => $path."index.php/note",
-		'siteUrlauth' => $path."index.php/auth",
+		'siteUrlauth' => $path."index.php/auth/login",
 		'siteUrlreg' => $path."index.php/auth/register",
 		'siteUrllogout' => $path."index.php/auth/logout",
 		'base_url'=>$this->config->base_url("asset/3255309.jpg"),
@@ -58,7 +69,7 @@ public function addnote(){
 		$data = [
 			'PATH' => $path,
 			'siteUrl' => $path."index.php/note",
-			'siteUrlauth' => $path."index.php/auth",
+			'siteUrlauth' => $path."index.php/auth/login",
 			'siteUrlreg' => $path."index.php/auth/register",
 			'siteUrllogout' => $path."index.php/auth/logout",
 			'page1'=>$this->input->get('page'),
@@ -118,7 +129,7 @@ public function edit($id, $page){
 		$data = [
 			'PATH' => $path,
 			'siteUrl' => $path."index.php/note",
-			'siteUrlauth' => $path."index.php/auth",
+			'siteUrlauth' => $path."index.php/auth/login",
 			'siteUrlreg' => $path."index.php/auth/register",
 			'siteUrllogout' => $path."index.php/auth/logout",
 			'page1'=>$page,
@@ -184,29 +195,63 @@ public function save(){}
 // ----------------------------------------------------------------------------
 
 public function delete(){
+	$this->load->helper('url');
 	$this->checkNoteTable();
-	$id=$this->input->get('id');
-	$page=$this->input->get('page');
+	$data = $this->input->post();
+	$id=$data['id'];
+	$page=$data['page'];
+	// $id=$this->input->get("deleteId");
+	// $page=$this->input->get("page");
+
+	
+	// $id=$this->input->get('id');
+	// $page=$this->input->get('page');
     // $id=$_GET['id'];
     // $page=$_GET['page'];
     
 
 	$this->load->model('Notemodel');
-	$user=$this->Notemodel->login($id, $page);
+	$result = $this->Notemodel->delete($id);
+
+	// log_message("debug", "result: " . print_r($result, true));
 
     // $user = new NoteModel();
     // $user->delete($id);
-  
-    if($user){
-       
-		$this->load->view('note/index&page=$page'); //?
+   
+	if($result){
+
+		
+		redirect('note/index?page='.$page.'');
+		
+		// $this->load->view('note/index?page='.$page.''); //?
        // header("Location: note.php?action=index&page=$page");
 
        // echo '<script>alert("Note with id('.$page.') Deleted")</script>';
      //   exit;
+
+	}
+	else{
+		echo 'alert("Note with id="'.$id.'" not deleted")';  
 	}
 
    
+}
+
+public function getnotes(){
+    session_start();
+	$usid=$_SESSION["id"];
+	$data = $this->input->post();
+	$this->load->model('Notemodel');
+	$result = $this->Notemodel->find($usid, $data['page'],$data['num_page'] , $data['numRows'] );
+	if($result){
+		echo json_encode($result);
+	}
+
+	   
+
+	
+
+
 }
 
 

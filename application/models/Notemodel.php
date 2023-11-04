@@ -64,7 +64,7 @@ class Notemodel extends CI_Model{
 		$c = &get_instance();
 		$c->load->database();
         
-		$result=$c->db->query("UPDATE `addnote2` SET datee='$date' , title='$title' , note='$description' , datee='$date'  where id='$id' ");
+		$result=$c->db->query("UPDATE `addnote2` SET  title='$title' , note='$description' , datee='$date'  where id='$id' ");
 		
 
        // mysqli_query($connect,"UPDATE `addnote` SET datee='$date' , title='$title' , note='$description' , datee='$date'  where id='$id' ");
@@ -82,17 +82,24 @@ class Notemodel extends CI_Model{
     {
 		$c = &get_instance();
 		$c->load->database();
+
+		$checkid=$c->db->query("SELECT * FROM `addnote2` where id='$id' ");
+		if($checkid->num_rows()> 0){
         
-		$result=$c->db->query("delete from `addnote2` where id='$id' ");
-        //mysqli_query($connect,"delete from `addnote` where id='$id' ");
-		if($result){
-			return array("statusCode"=>200);
+			$result=$c->db->query("delete from `addnote2` where id='$id' ");
+			//mysqli_query($connect,"delete from `addnote` where id='$id' ");
+			if( $result){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
-		else{
-			return array("statusCode"=>201);
+
+		return false;
+	
 		
-		}
-       
+
 
     }
     
@@ -109,26 +116,29 @@ class Notemodel extends CI_Model{
      */
     public static function find($user_id, $pageIndex, $pageSize, &$numRows = 0)
     {
+		
 		$c = &get_instance();
+		$c->load->model('Notemodel');
         $notes = [];
 
         
 		$c->load->database();
         // todo .....
 		$sql_result=$c->db->query("SELECT * from `addnote2` WHERE   `user_id`=$user_id  ");
-		
 		$total=$sql_result->num_rows();
 		$total_pages=ceil($total/$pageSize);
         $numRows = $total_pages;
-
         $start_form=($pageIndex-1)*$pageSize;
 		$sql=$c->db->query("SELECT * FROM `addnote2` WHERE `user_id`=$user_id   LIMIT " .  $start_form . ',' .  $pageSize );
+		
 		if ($total>0){
-			foreach ($sql->result() as $row)
+			
+		foreach ($sql->result() as $row)
 		{
 		
-				$note=$c->load->model('Notemodel');
-                // $note = new NoteModel();
+				// $note=;
+                $note = new NoteModel();
+				
                 $note->id = $row->id;
                 $note->title = $row->title;
                 $note->description=$row->note;
@@ -153,6 +163,9 @@ class Notemodel extends CI_Model{
 		
 		}
         }
+
+		// var_dump($notes);
+		log_message("debug", "notes:\n" . print_r($notes, true));
 
         return $notes;
     }

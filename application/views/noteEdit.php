@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 ?>
 
-
+<div id="App">
 <div class=' alert alert-success alert-dismissible ' id='success' style='display:none;margin-top:50px'>
     <div >
 	  <a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a>
@@ -16,63 +16,110 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <form action="" method="POST" id="addform">
-    <div  class=' w-50  bg-dark text-white rounded' style='margin-top:160px;height:300px;padding-top:35px;margin-left:400px'>
-<div class="container-fluid " style="margin-left: 180px;">
-<div class="row">
-<input id="title" type="text" placeholder="عنوان یادداشت" name="data[title]" class="w-50 p-2 m-3 " value="<?php echo $row->title; ?>" >
-</div>
-</div>
-<div class="container-fluid " style="margin-left: 180px;">
-<div class="row">
-<input id="note" type="text" placeholder="متن یادداشت" name="data[note]"  class="w-50 p-2 m-3 " value="<?php echo $row->note; ?>">
-</div>
-</div>
-<div class="container-fluid" style="margin-left: 180px;">
-<div class="row">
-    <button class="btn btn-primary col-lg-6  w-25 p-2 m-1" type="button" name="edit" id="edit" onclick="editbut();" >Edit</button>
-    <button class="btn btn-outline-primary col-lg-6 w-25 p-2 m-1 " type="button" name="return" id="return" onclick="returnbut();" >Return</button>
-</div>
-</div>
-</div>
+	<div class=' w-50  bg-dark text-white rounded' style='margin-top:160px;height:300px;padding-top:35px;margin-left:400px'>
+		<div class="container-fluid " style="margin-left: 180px;">
+			<div class="row">
+				<input id="title" v-model="title" type="text" placeholder="عنوان یادداشت" name="data[title]" class="w-50 p-2 m-3 " >
+			</div>
+		</div>
+		<div class="container-fluid " style="margin-left: 180px;">
+			<div class="row">
+				<input id="note" v-model="note" type="text" placeholder="متن یادداشت" name="data[note]"  class="w-50 p-2 m-3 ">
+			</div>
+		</div>
+		<div class="container-fluid" style="margin-left: 180px;">
+			<div class="row">
+				<button class="btn btn-primary col-lg-6  w-25 p-2 m-1" type="button" name="edit" id="edit" @click="editbut()" >Edit</button>
+				<button class="btn btn-outline-primary col-lg-6 w-25 p-2 m-1 " type="button" name="return" id="return" onclick="returnbut();" >Return</button>
+			</div>
+		</div>
+	</div>
+	
 </form>
+</div>
 
 <script>
-function editbut(){
-   // $('#save').attr('disabled','disables');
-    var title=$('#title').val();
-    var note=$('#note').val();
-    if(!title || !note ){
-        alert('Please fill all the field !');
-        return;
-    }
-    let url = "<?php echo $PATH?>note/update";
-    $.ajax({
-        url:url,
-        type:'POST',
-        data:{
-            
-            id:<?php  echo $id?>,
-            title:title,
-            note:note,  
-        },
-       // dataType:'json',
-        success: function(dataResult){
-            var data = JSON.parse(dataResult);
-            if(data.statusCode==200){
-              //  $('#save').removeAttr('disabled');
-              //  $('#addform').find('input:text').val('');
-                $('#success').show();
-                $('#success').html('note added successfuly!'); 
-                location.href = "<?php echo $PATH?>note/index?page=<?php echo $page1?>";
-               
-            }
-            else if(data.statusCode==201){
-              $('#error').show();
-              $('#error').html('sth went wronge')
-            }
-        }
-    });
+Vue.createApp({
+	data(){
+    return{
+			id:<?php echo $id?>,
+			title:'<?php echo $row->title; ?>',
+			note:'<?php echo $row->note; ?>',
+		}
+	},
+
+		methods: {
+					editbut(){
+						if(!(this.title) || !(this.note) ){
+							alert('Please fill all the field !')
+							return
+					}
+					let url = "<?php echo $PATH?>note/update";
+					$.ajax({
+							url:url,
+							type:'POST',
+							data:{
+									
+									id:this.id,
+									title:this.title,
+									note:this.note,  
+							},
+							success:(dataResult)=>{
+									var data = JSON.parse(dataResult);
+									if(data.statusCode==200){
+											$('#success').show();
+											$('#success').html('note added successfuly!'); 
+											location.href = "<?php echo $PATH?>note/index?page=<?php echo $page1?>";
+										
+									}
+									else if(data.statusCode==201){
+										$('#error').show();
+										$('#error').html('sth went wronge')
+									}
+							}
+					});
+			}
 }
+}).mount("#App");
+
+
+
+// function editbut(){
+//    // $('#save').attr('disabled','disables');
+//     var title=$('#title').val();
+//     var note=$('#note').val();
+//     if(!title || !note ){
+//         alert('Please fill all the field !');
+//         return;
+//     }
+//     let url = "<?php echo $PATH?>note/update";
+//     $.ajax({
+//         url:url,
+//         type:'POST',
+//         data:{
+            
+//             id:<?php  echo $id?>,
+//             title:title,
+//             note:note,  
+//         },
+//        // dataType:'json',
+//         success: function(dataResult){
+//             var data = JSON.parse(dataResult);
+//             if(data.statusCode==200){
+//               //  $('#save').removeAttr('disabled');
+//               //  $('#addform').find('input:text').val('');
+//                 $('#success').show();
+//                 $('#success').html('note added successfuly!'); 
+//                 location.href = "<?php echo $PATH?>note/index?page=<?php echo $page1?>";
+               
+//             }
+//             else if(data.statusCode==201){
+//               $('#error').show();
+//               $('#error').html('sth went wronge')
+//             }
+//         }
+//     });
+// }
 
 function returnbut(){
     $.ajax({
