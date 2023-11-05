@@ -14,8 +14,10 @@
             <div class="col-lg-2 col-md-2 col-sm-1  align-middle text-center">
                 <a href="<?php echo $siteUrllogout?>" class="text-white  align-middle text-center">Logout</a>
             </div>
+			<?php if(!Usermodel::getCurrentUserId()) { ?>
             <div class="col-lg-2 col-md-2 col-sm-1  align-middle text-center">
                 <a href="<?php echo $siteUrlreg?>" class="text-white  align-middle text-center">Register</a>
             </div>
+			<?php } ?>
   </div>
 </div>

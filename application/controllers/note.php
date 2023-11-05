@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // require "database.php";
 
 
-class Note extends CI_Controller {
+class Note extends MY_Controller {
 
 	// public function __construct(){
 		// check if user logged in
@@ -44,7 +44,7 @@ public function index(){
 	$this->checkNoteTable();
 	$this->load->view("header");
 	$path= "http://localhost/codeigniter/"; 
-	session_start();
+	// session_start();
 	$data = [
 		'PATH' => $path,
 		'siteUrl' => $path."index.php/note",
@@ -65,7 +65,7 @@ public function addnote(){
 	$this->checkNoteTable();
 	$this->load->view("header");
 	$path= "http://localhost/codeigniter/"; 
-	session_start();
+	// session_start();
 		$data = [
 			'PATH' => $path,
 			'siteUrl' => $path."index.php/note",
@@ -83,7 +83,7 @@ public function addnote(){
 public function insert(){
 
 	$this->checkNoteTable();
-	session_start();
+	// session_start();
     $usid=$_SESSION["id"];
 	$title=$this->input->post("title");
 	$note=$this->input->post("note");
@@ -124,7 +124,7 @@ public function edit($id, $page){
 
 	$this->load->view("header");
 	$path= "http://localhost/codeigniter/"; 
-	session_start();
+	// session_start();
 	$this->load->database();
 		$data = [
 			'PATH' => $path,
@@ -199,7 +199,7 @@ public function delete(){
 	$this->checkNoteTable();
 	$data = $this->input->post();
 	$id=$data['id'];
-	$page=$data['page'];
+	
 	// $id=$this->input->get("deleteId");
 	// $page=$this->input->get("page");
 
@@ -219,39 +219,31 @@ public function delete(){
     // $user->delete($id);
    
 	if($result){
+        echo json_encode([
+            'statusCode'=>200
+        ]);
+        return;
+    }
 
-		
-		redirect('note/index?page='.$page.'');
-		
-		// $this->load->view('note/index?page='.$page.''); //?
-       // header("Location: note.php?action=index&page=$page");
-
-       // echo '<script>alert("Note with id('.$page.') Deleted")</script>';
-     //   exit;
-
-	}
-	else{
-		echo 'alert("Note with id="'.$id.'" not deleted")';  
-	}
+    echo json_encode([
+        'statusCode'=>201
+    ]);
 
    
 }
 
 public function getnotes(){
-    session_start();
+    // session_start();
 	$usid=$_SESSION["id"];
 	$data = $this->input->post();
 	$this->load->model('Notemodel');
 	$result = $this->Notemodel->find($usid, $data['page'],$data['num_page'] , $data['numRows'] );
 	if($result){
 		echo json_encode($result);
+		return;
 	}
 
-	   
-
-	
-
-
+	echo json_encode([]);
 }
 
 

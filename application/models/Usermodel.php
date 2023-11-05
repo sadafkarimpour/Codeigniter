@@ -74,7 +74,7 @@ class Usermodel extends CI_Model {
 		
 		$c = &get_instance();
 		$c->load->database();
-        session_start();
+        // session_start();
         
 		$email=$c->input->post('email');
 		$passwordd=$c->input->post('passwordd');
@@ -142,6 +142,19 @@ class Usermodel extends CI_Model {
         return true;
     }
 
+	public static function getCurrentUserId()
+	{
+		// session_start();
+		if(isset($_SESSION['id'])){
+			$userId = $_SESSION["id"];
+			if(!$userId){
+				return false;
+			}
+			return $userId;
+		}
+
+		return false;
+	}
 
 }
 ?>

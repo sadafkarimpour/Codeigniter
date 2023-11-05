@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // require "database.php";
 
 
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
 
 /**
  * check if 'user' table exists
@@ -115,7 +115,7 @@ public function doLogin(){
  */
 public function logout(){
     
-    session_start();
+    // session_start();
     unset($_SESSION["id"]);
     unset($_SESSION["fname"]);
     unset($_SESSION["lname"]);
@@ -123,7 +123,7 @@ public function logout(){
     unset($_SESSION["phone_number"]);
     unset($_SESSION["email"]);
     unset($_SESSION["passwordd"]);
-	$this->load->view('index.php');
+	redirect("welcome/index");
   
     
 }

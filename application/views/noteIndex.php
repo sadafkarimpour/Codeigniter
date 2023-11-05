@@ -161,7 +161,7 @@
 <div class="container-fluid" style="padding-left: 120px;">
 <div class="row">
     <button class="btn btn-primary col-lg-6  w-25 p-1 m-1" type="button" name="save" id="save" @click="savebut()" >Save</button>
-    <button class="btn btn-outline-primary col-lg-6 w-25 p-1 m-1 " type="button" name="return" id="return" onclick="returnbut();" >Return</button>
+    <button class="btn btn-outline-primary col-lg-6 w-25 p-1 m-1 " type="button" name="return" id="return" @click="returnbut()" >Return</button>
 	
 </div>
 </div>
@@ -357,26 +357,52 @@
 					}
 			});
 	  },
-			deletebut(deleteId){
+		deletebut(deleteId){
 				
 				let url=""+this.path+"note/delete";
-			$.ajax({
-				url:url,
-				type:'POST',
-				data:{
-					page:this.page,
-					id:this.deleteId,
-				},
-				success: function(r) 
-					{
+				$.ajax({
+					url:url,
+					type:'POST',
+					data:{
 						
-						var data = JSON.parse(r);
-						alert("deleted");
-					}
-		
+						id:deleteId,
+					},
+					dataType: 'json',
+					success: (data) =>
+					{
+						// var data = JSON.parse(r);
+						if(data.statusCode==200){
+							$('#success').show();
+							$('#success').html('note deleted successfuly!'); 
+							this.getlist();
+							}
+							else if(data.statusCode==201){
+								$('#error').show();
+								$('#error').html('sth went wronge')
+							}
+						}
 
-				});
-			},
+						});
+					},
+			returnbut(){
+				$.ajax({
+					url:"<?php echo $PATH?>note/index",
+					type:"GET",
+					success: function(r) 
+			{
+				if(data.statusCode==200){
+					$('#success').show();
+					$('#success').html('note deleted successfuly!'); 
+					this.getlist();
+					}
+					else if(data.statusCode==201){
+						$('#error').show();
+						$('#error').html('sth went wronge')
+					}
+				}
+			});
+
+		}		
 			}
 	}).mount("#App");
 
