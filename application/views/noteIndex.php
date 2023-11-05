@@ -392,7 +392,7 @@
 			{
 				if(data.statusCode==200){
 					$('#success').show();
-					$('#success').html('note deleted successfuly!'); 
+					$('#success').html('note deleted successfuly'); 
 					this.getlist();
 					}
 					else if(data.statusCode==201){
