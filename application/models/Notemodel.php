@@ -46,16 +46,13 @@ class Notemodel extends CI_Model{
         $c->load->database();
         
 		$result=$c->db->query("INSERT INTO `addnote2` (title,note,user_id) VALUES ('$title','$description','$user_id')");
-        //$sql="INSERT INTO `addnote` (title,note,user_id) VALUES ('$title','$description','$user_id')";
-        // mysqli_query($connect,$sql); 
-      //  header('location:note.php?action=index');
-	  if($result){
-		return array("statusCode"=>200);
-	}
-	else{
-		return array("statusCode"=>201);
-	
-	}
+		if($result){
+			return array("statusCode"=>200);
+		}
+		else{
+			return array("statusCode"=>201);
+		
+		}
 
     }
     
@@ -67,16 +64,15 @@ class Notemodel extends CI_Model{
 		$result=$c->db->query("UPDATE `addnote2` SET  title='$title' , note='$description' , datee='$date'  where id='$id' ");
 		
 
-       // mysqli_query($connect,"UPDATE `addnote` SET datee='$date' , title='$title' , note='$description' , datee='$date'  where id='$id' ");
 	   if($result){
-		return array("statusCode"=>200);
-	}
-	else{
-		return array("statusCode"=>201);
-	
-	}
+			return array("statusCode"=>200);
+		}
+		else{
+			return array("statusCode"=>201);
+		
+		}
 
-    }
+	}
     
     public static function delete($id)
     {
@@ -136,35 +132,19 @@ class Notemodel extends CI_Model{
 		foreach ($sql->result() as $row)
 		{
 		
-				// $note=;
                 $note = new NoteModel();
-				
+			
                 $note->id = $row->id;
                 $note->title = $row->title;
                 $note->description=$row->note;
                 $note->user_id=$row->user_id;
-                // ... 
                 $note->datetime_created = ($row->datee);
-               // $note->datetime_edited =($row['datetime_edited']);
-                // ....
+              
                 $notes[] = $note;
            
-       
-       // $sql="SELECT * from `addnote` WHERE   `user_id`=$user_id  " ;
-       // $sql_result=mysqli_query($connect,$sql);
-
-        //$total=mysqli_num_rows($sql_result);
-        
-       // $sql= "SELECT * FROM `addnote` WHERE `user_id`=$user_id   LIMIT " .  $start_form . ',' .  $pageSize ;  
-       // $sql_result=mysqli_query($connect,$sql);
-     
-            // while ($row=mysqli_fetch_assoc($sql_result)) {
-                //array_push($notes,$row);
 		
-		}
+			}
         }
-
-		// var_dump($notes);
 		log_message("debug", "notes:\n" . print_r($notes, true));
 
         return $notes;

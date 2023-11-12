@@ -44,7 +44,6 @@ public function index(){
 	$this->checkNoteTable();
 	$this->load->view("header");
 	$path= "http://localhost/codeigniter/"; 
-	// session_start();
 	$data = [
 		'PATH' => $path,
 		'siteUrl' => $path."index.php/note",
@@ -65,7 +64,6 @@ public function addnote(){
 	$this->checkNoteTable();
 	$this->load->view("header");
 	$path= "http://localhost/codeigniter/"; 
-	// session_start();
 		$data = [
 			'PATH' => $path,
 			'siteUrl' => $path."index.php/note",
@@ -83,20 +81,13 @@ public function addnote(){
 public function insert(){
 
 	$this->checkNoteTable();
-	// session_start();
     $usid=$_SESSION["id"];
 	$title=$this->input->post("title");
 	$note=$this->input->post("note");
-    // $usid=$_SESSION["id"];
-    // $title=$_POST['title'];
-    // $note=$_POST['note'];
 
 	$this->load->model('Notemodel');
-    // $user = new UserModel();
 	$user=$this->Notemodel->insertnote($title, $note, $usid);
-	//var_dump($this->Notemodel->insertnote($title, $note, $usid));
-    // $user = new NoteModel();
-    // $user->insertnote($title, $note, $usid);
+
   
     if($user){
         echo json_encode([
@@ -124,7 +115,6 @@ public function edit($id, $page){
 
 	$this->load->view("header");
 	$path= "http://localhost/codeigniter/"; 
-	// session_start();
 	$this->load->database();
 		$data = [
 			'PATH' => $path,
@@ -143,12 +133,7 @@ public function edit($id, $page){
   $this->load->view('noteEdit',$data);
 
   $this->load->view("footer");
-  
-// $id=$_GET['id'];
-// $query=mysqli_query($connect,"select * from `addnote2` where id='$id' ");
-// $row=mysqli_fetch_array($query);
 
-// require_once 'view/noteEdit.php';
 }
 
 // ----------------------------------------------------------------------------
@@ -157,24 +142,14 @@ public function update(){
 
 	$this->load->database();
 	$id=$this->input->post('id');
-	
-    //$id=$_POST['id'];
     date_default_timezone_set('Asia/Tehran');
 	$date =date('Y-m-d H:i:s');
-    //$date = date('Y-m-d H:i:s'); 
 	$title=$this->input->post('title');
 	$note=$this->input->post('note');
-    // $title=$_POST['title'];
-    // $note=$_POST['note'];
-   
-
-	
+ 
 	$this->load->model('Notemodel');
-    // $user = new UserModel();
 	$user=$this->Notemodel->update($id, $title, $note, $date);
 
-    // $user = new NoteModel();
-    // $user->update($id, $title, $note, $date);
   
     if($user){
         echo json_encode([
@@ -200,23 +175,10 @@ public function delete(){
 	$data = $this->input->post();
 	$id=$data['id'];
 	
-	// $id=$this->input->get("deleteId");
-	// $page=$this->input->get("page");
-
-	
-	// $id=$this->input->get('id');
-	// $page=$this->input->get('page');
-    // $id=$_GET['id'];
-    // $page=$_GET['page'];
-    
 
 	$this->load->model('Notemodel');
 	$result = $this->Notemodel->delete($id);
 
-	// log_message("debug", "result: " . print_r($result, true));
-
-    // $user = new NoteModel();
-    // $user->delete($id);
    
 	if($result){
         echo json_encode([
@@ -233,7 +195,6 @@ public function delete(){
 }
 
 public function getnotes(){
-    // session_start();
 	$usid=$_SESSION["id"];
 	$data = $this->input->post();
 	$this->load->model('Notemodel');
@@ -249,48 +210,6 @@ public function getnotes(){
 
 
 // ----------------------------------------------------------------------------
-
-// public function actions(){
-// 	$this->checkNoteTable();
-// 	session_start();
-// 	$usid=$_SESSION["id"];
-	
-// 	$action = $_GET["action"];
-	
-// 	switch ($action) {
-// 		case 'index':
-// 			$this->index();
-// 			break;
-	
-	
-// 		case 'addnote':
-// 			$this->addnote();
-// 			break;
-// 		case 'insert':
-// 			$this->insert();
-// 			break;
-		
-// 		case 'edit':
-// 			$this->edit();
-// 			break;
-	
-// 		case 'update':
-// 			$this->update();
-// 			break;
-// 		case 'delete':
-// 			$this->delete();
-// 			break;
-	
-// 		case 'search':
-// 			$this->search();
-// 			break;
-		
-// 		default:
-// 			# code...
-// 			echo "action not found";
-// 			break;
-// 	}
-// }
 
 
 }

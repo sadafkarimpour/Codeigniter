@@ -76,15 +76,11 @@ public function login(){
 public function doLogin(){
 	$this->checkUserTable();
 	$email=$this->input->post('email');
-	$passwordd=$this->input->post('passwordd');
-    // $email= $_POST['email'];
-    // $passwordd= $_POST['passwordd'];
-    
+	$passwordd=$this->input->post('passwordd');  
+
     $this->load->model('Usermodel');
-    // $user = new UserModel();
 	$result=$this->Usermodel->login($email, $passwordd);
-    // $result = $user->login($email, $passwordd);
-  
+ 
     if($result){
         echo json_encode([
             'statusCode'=>200
@@ -95,12 +91,6 @@ public function doLogin(){
     echo json_encode([
         'statusCode'=>201
     ]);
-
-    // Prepare the response as a JSON object
-    // $response = array("statusCode" => $result);
-  
-    // // Return the response as a JSON string
-    // echo json_encode($response);
 
 }
 
@@ -163,8 +153,6 @@ public function register(){
  */
 public function doRegister(){
 
-    // print_r($_POST);
-   
 	$this->checkUserTable();
 	$fname=$this->input->post('fname');
 	$lname=$this->input->post('lname');
@@ -172,29 +160,9 @@ public function doRegister(){
 	$phone_number=$this->input->post('phone_number');
 	$email=$this->input->post('email');
 	$passwordd=$this->input->post('passwordd');
-    // $fname= $_POST['fname'];
-    // $lname= $_POST['lname'];
-    // $username= $_POST['username'];
-    // $phone_number=$_POST['phone_number'];
-    // $email= $_POST['email'];
-    // $passwordd= $_POST['passwordd'];
   
 	$d = $this->load->model('usermodel');
-    // $user = new UserModel();
-	// var_dump($d);die();
 	$result=$this->usermodel->insert($fname, $lname, $username, $phone_number, $email, $passwordd);
-    // $user = new UserModel();
-    // $result= $user->insert($fname, $lname, $username, $phone_number, $email, $passwordd);
-  
-    // Prepare the response as a JSON object
-    // $response = array("statusCode" => $result);
-  
-    // Return the response as a JSON string
-    // echo json_encode($response);
-
-    // echo json_encode([
-    //     'code'=>1
-    // ]);
 
     if($result){
         echo json_encode([
@@ -209,38 +177,6 @@ public function doRegister(){
 }
 
 // ----------------------------------------------------------------------------
-// public function actions_auth(){
-// 	$this->checkUserTable();
 
-// 	$action = $_GET["action"];
-	
-	
-// 	switch ($action) {
-// 		case 'login':
-// 			$this->login();
-// 			break;
-	
-// 		case 'dologin':
-// 			$this->doLogin();
-// 			break;
-	
-// 		case 'logout':
-// 			$this->logout();
-// 			break;
-	
-// 		case 'register':
-// 			$this->register();
-// 			break;
-	
-// 		case 'doregister':
-// 			$this->doRegister();
-// 			break;
-		
-// 		default:
-// 			# code...
-// 			echo "action not found";
-// 			break;
-// 	}
-// }
 
 }

@@ -50,10 +50,6 @@ class Usermodel extends CI_Model {
 		$c->load->database();
 		$result = $c->db->query("INSERT INTO `user2` ( `fname`, `lname`, `username`, `phone_number`, `email`, `passwordd`) VALUES ('$firstname','$lastname','$username','$phone_number','$email','$passwordd')");
 
-        // $sql="INSERT INTO `user` ( `fname`, `lname`, `username`, `phone_number`, `email`, `passwordd`) VALUES ('$firstname','$lastname','$username','$phone_number','$email','$passwordd')";
-
-
-        // $result=mysqli_query($connect,$sql);
         if($result){
             return array("statusCode"=>200);
         }
@@ -74,16 +70,11 @@ class Usermodel extends CI_Model {
 		
 		$c = &get_instance();
 		$c->load->database();
-        // session_start();
         
 		$email=$c->input->post('email');
 		$passwordd=$c->input->post('passwordd');
-        // $email=$_POST['email'];
-        // $passwordd=$_POST['passwordd'];
-
+    
 		$check = $c->db->query("SELECT * From  `user2` WHERE email='$email' and passwordd='$passwordd'");
-        // $sqlche= "SELECT * From  `user` WHERE email='$email' and passwordd='$passwordd'";
-        // $check=mysqli_query($connect,$sqlche);
 		$num_rows=$check->num_rows();
         if($num_rows===1){
 			foreach ($check->result() as $row)
@@ -93,36 +84,19 @@ class Usermodel extends CI_Model {
            
 				$_SESSION["id"]=$row->id;
 				
-			  //   echo json_encode(array("statusCode"=>200));
-			  return true;
+			  	return true;
 			   
 				
 			  }
 			 else{
-			  // echo json_encode(array("statusCode"=>201));
 			  return false;
 			 }
 				
 		}
-            // $row=mysqli_fetch_assoc($check);
-        //     if($row['email']=$email and $row['passwordd']=$passwordd){
-           
-        //       $_SESSION["id"]=$row["id"];
-        //     //   echo json_encode(array("statusCode"=>200));
-        //     return true;
-             
-              
-        //     }
-        //    else{
-        //     // echo json_encode(array("statusCode"=>201));
-        //     return false;
-        //    }
-          
         }
         else
         {
            
-            // echo json_encode(array("statusCode"=>201));
             return false;
         }
     
@@ -144,7 +118,6 @@ class Usermodel extends CI_Model {
 
 	public static function getCurrentUserId()
 	{
-		// session_start();
 		if(isset($_SESSION['id'])){
 			$userId = $_SESSION["id"];
 			if(!$userId){
