@@ -110,7 +110,7 @@ class Notemodel extends CI_Model{
      * @param int $pageSize
      * @return NoteModel[]
      */
-    public static function find($user_id, $pageIndex, $pageSize, &$numRows = 0)
+    public static function find($user_id, $pageIndex, $pageSize, &$numRows = 0, $search = "")
     {
 		
 		$c = &get_instance();
@@ -120,12 +120,19 @@ class Notemodel extends CI_Model{
         
 		$c->load->database();
         // todo .....
-		$sql_result=$c->db->query("SELECT * from `addnote2` WHERE   `user_id`=$user_id  ");
+		$query = "SELECT * from `addnote2` WHERE   `user_id`=$user_id  ";
+		if($search != ""){
+			$query .= " AND `title` LIKE '%$search%' OR `note` LIKE '%$search%' ";
+		}
+		$query .= " ORDER BY `id` DESC";
+
+		$sql_result=$c->db->query($query);
 		$total=$sql_result->num_rows();
 		$total_pages=ceil($total/$pageSize);
         $numRows = $total_pages;
         $start_form=($pageIndex-1)*$pageSize;
-		$sql=$c->db->query("SELECT * FROM `addnote2` WHERE `user_id`=$user_id   LIMIT " .  $start_form . ',' .  $pageSize );
+			$query .=" LIMIT " .  $start_form . ',' .  $pageSize;
+		$sql=$c->db->query($query);
 		
 		if ($total>0){
 			
@@ -150,6 +157,24 @@ class Notemodel extends CI_Model{
         return $notes;
     }
 
+
+
+		public static function search($search_word)
+    {
+			$c = &get_instance();
+			$c->load->database();
+					
+			$result=$c->db->query("SELECT * FROM `addnote2`  WHERE  $search_word ");
+	
+			 if($result){
+				return array("statusCode"=>200);
+			}
+			else{
+				return array("statusCode"=>201);
+			
+			}
+      
+    }
 
 }
 

@@ -44,77 +44,85 @@
 		
 	
 							<div  class="col col-lg-7 col-md-7 col-sm-12 col-12 text-white " >
-										<table class="w-100">
-											<thead>
-												<tr>
-													<th style="border:1px solid white " >شماره</th>
-													<th  style="border:1px solid white ">تاریخ</th>
-													<th style="border:1px solid white ">عنوان</th>
-													<th style="border:1px solid white ;" >متن</th>
-													<th style="border:1px solid white ; ">حذف / ویرایش</th>													
-												</tr>
-											</thead>
+								<nav class="row navbar navbar-dark bg-dark">
+								
+										<div class="col col-lg-6 col-md-6 col-sm-6 col-6">
+											<input v-model="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+										</div>
+										<div class="col col-lg-6 col-md-6 col-sm-6 col-6 d-flex align-items-start">
+											<button class="btn btn-outline-primary my-2 my-sm-0 w-50" type="button" @click="searchbut()">Search</button>
+										</div>
+									
+								</nav>
+								<div class="table-responsive">
+								<table class="w-100">
+									<thead>
+										<tr>
+											<th style="border:1px solid white " >شماره</th>
+											<th  style="border:1px solid white ">تاریخ</th>
+											<th style="border:1px solid white ">عنوان</th>
+											<th style="border:1px solid white ;" >متن</th>
+											<th style="border:1px solid white ; ">حذف / ویرایش</th>													
+										</tr>
+									</thead>
 
-											<tbody>
-												
-												<?php 
-
-												$num_page=4;
-
-												if($page1){
-													$page=$page1;
-												}
-												else{
-													$page=1;
-												}
-
-												$numRows = 0;
-
-												$c = &get_instance();
-												$c->load->model('Notemodel');
-
-												$notes=$c->Notemodel->find($usid, $page, $num_page, $numRows);
-
-												?>
-												<tr v-for="note in notes"  style='border:1px solid white ; color:white;text-align:center;'>
-													<td style='border:1px solid white ; color:white;text-align:center;justify-content:center;'><div  class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100 ' v-html="note.id" ></div></td>
-													<td   style='border:1px solid white ; color:white;justify-content:center;text-align:center'><div class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100 text-justify text-center' v-html="note.datetime_created "></div></td>
-													<td   style='border:1px solid white ; color:white'>
-														<div v-if="editing && note.id == editId" >
-															<input v-model="title" id='title' type='text' placeholder='عنوان یادداشت' class='w-75 p-2 m-3'>
-														</div>
-														<div v-else class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100' v-html="note.title" style="justify-content:center;text-align:center"></div>
-													</td>
-													<td style='border:1px solid white ; color:white ;padding-right:20px'>
-														<div v-if="editing && note.id == editId" >
-															<input v-model="description" id='description' type='text' placeholder='متن یادداشت' class='w-75 p-2 m-3'>
-														</div>
-														<div v-else class='col-lg-2 col-md-2 col-sm-1 p-2 m-2 w-100' v-html="note.description" style="justify-content:center;text-align:center; display: block; overflow-y: scroll;padding: 5px;height: 95px"></div>
-													</td>
-													<td >
-														<div  class='btn-group'>
-															<div v-if="editing && note.id == editId">		
-															<a   @click="doedit(editing)" class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-primary' >ثبت</a>
-															<a   @click="returnbut()" class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-danger' >بازگشت</a>
-															</div>
-															<div v-else>
-																<a  @click="edit(note)" class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-primary'>ویرایش</a>
-																<a  class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-danger' @click="deletebut(note.id)">حذف</a>
-															</div>
-															
-														</div>
-													</td>
-													</tr>
-											</tbody>
-											
+									<tbody>
 										
-											
-												
-										</table>
-									</div>
+										<?php 
+
+										$num_page=4;
+
+										if($page1){
+											$page=$page1;
+										}
+										else{
+											$page=1;
+										}
+
+										$numRows = 0;
+
+										$c = &get_instance();
+										$c->load->model('Notemodel');
+
+										$notes=$c->Notemodel->find($usid, $page, $num_page, $numRows);
+
+										?>
+										<tr v-for="note in notes"  style='border:1px solid white ; color:white;text-align:center;'>
+											<td style='border:1px solid white ; color:white;text-align:center;justify-content:center;'><div  class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100 ' v-html="note.id" ></div></td>
+											<td   style='border:1px solid white ; color:white;justify-content:center;text-align:center'><div class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100 text-justify text-center' v-html="note.datetime_created "></div></td>
+											<td   style='border:1px solid white ; color:white'>
+												<div v-if="editing && note.id == editId" >
+													<input v-model="title" id='title' type='text' placeholder='عنوان یادداشت' class='w-75 p-2 m-3'>
+												</div>
+												<div v-else class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100' v-html="note.title" style="justify-content:center;text-align:center"></div>
+											</td>
+											<td style='border:1px solid white ; color:white ;padding-right:20px'>
+												<div v-if="editing && note.id == editId" >
+													<input v-model="description" id='description' type='text' placeholder='متن یادداشت' class='w-75 p-2 m-3'>
+												</div>
+												<div v-else class='col-lg-2 col-md-2 col-sm-1 p-2 m-2 w-100' v-html="note.description" style="justify-content:center;text-align:center; display: block; overflow-y: scroll;padding: 5px;height: 95px"></div>
+											</td>
+											<td >
+												<div  class='btn-group'>
+													<div v-if="editing && note.id == editId">		
+													<a   @click="doedit(editing)" class=' p-2 btn btn-primary' >ثبت</a>
+													<a   @click="returnbut()" class=' p-2 btn btn-danger' >بازگشت</a>
+													</div>
+													<div v-else>
+														<a  @click="edit(note)" class=' p-2 btn btn-primary'>ویرایش</a>
+														<a  @click="deletebut(note.id)"  class=' p-2 btn btn-danger'>حذف</a>
+													</div>
+													
+												</div>
+											</td>
+											</tr>
+									</tbody>	
+								</table>
 								</div>
-							</div>					
+							</div>
 						</div>
+					</div>					
+				</div>
 					
 			<div class="row" >
 				<div  class='col col-lg-4 col-md-4 col-sm-4 col-4 ' >
@@ -218,7 +226,8 @@
 			titled:'',
 			noted:'',
 			page:'<?php echo $page?>',
-			path:'<?php echo $PATH?>'
+			path:'<?php echo $PATH?>',
+			search:''
 
 
 
@@ -280,6 +289,7 @@
 									page:this.page,
 									num_page:this.num_page,
 									numRows:this.numRows,
+									search: this.search
 								},
 								success:(res)=>{
 									console.log();
@@ -290,10 +300,10 @@
 						})
 				
 			},
-		    addnote(){
-				this.open=true
+		    // addnote(){
+			// 	this.open=true
 
-			},
+			// },
 			savebut(){
 			if(!(this.titled) || !(this.noted) ){
 					alert('Please fill all the field !');
@@ -358,7 +368,30 @@
 			this.editing=false
 			this.open=false
 
-		}		
+			},
+			searchbut(){
+				// let url = "<?php echo $PATH?>note/Searchnote";
+				// $.ajax({
+				// 		url:url,
+				// 		type:'POST',
+				// 		data:{
+				// 			search_word:this.search
+				// 		},
+				// 		success: (dataResult)=>{
+				// 				var data = JSON.parse(dataResult);
+				// 				if(data.statusCode==200){
+									
+				// 				}
+				// 				else if(data.statusCode==201){
+				// 					$('#error').show();
+				// 					$('#error').html('Not Found')
+				// 				}
+				// 		}
+				// });
+				this.getlist();
+
+			}		
+		    
 			}
 	}).mount("#App");
 

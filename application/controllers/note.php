@@ -197,14 +197,30 @@ public function delete(){
 public function getnotes(){
 	$usid=$_SESSION["id"];
 	$data = $this->input->post();
+	
 	$this->load->model('Notemodel');
-	$result = $this->Notemodel->find($usid, $data['page'],$data['num_page'] , $data['numRows'] );
+	$result = $this->Notemodel->find($usid, $data['page'],$data['num_page'] , $data['numRows'], $data['search'] );
 	if($result){
 		echo json_encode($result);
 		return;
 	}
 
 	echo json_encode([]);
+}
+
+
+public function Searchnote(){
+
+	$data = $this->input->post();
+	$this->load->model('Notemodel');
+	$result = $this->Notemodel->search($data['search_word']);
+	if($result){
+		echo json_encode($result);
+		return;
+	}
+
+	echo json_encode([]);
+    
 }
 
 
