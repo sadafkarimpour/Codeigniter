@@ -79,7 +79,7 @@ public function addnote(){
 }
 
 public function insert(){
-
+	$this->load->helper('url');
 	$this->checkNoteTable();
     $usid=$_SESSION["id"];
 	$title=$this->input->post("title");

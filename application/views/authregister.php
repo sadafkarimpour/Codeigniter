@@ -10,10 +10,10 @@
 			<a href='#' class='col close' data-dismiss='alert' aria-label='close'>×</a>
 		</div>
 	</div>
-	<form  method='POST' action='' autocomplete='off' id='signform' class="container d-flex align-items-center justify-content-center" style="width:650px;height:720px;">
+	<form  method='POST' action='' autocomplete='off' id='signform' class="container d-flex align-items-center justify-content-center" style="width:650px">
 		<main class="row w-100 h-75 align-items-center " >
 			<div class='col w-100 h-75 bg-dark text-white rounded' >
-				<div class='container w-100 '>
+				<!-- <div class='container w-100 '> -->
 					<div class='row w-100 '>
 						<p  class='col col-lg-12 col-md-12 col-sm-12 p-1 m-1'>
 							Sign Up
@@ -49,7 +49,7 @@
 						<button class='col col-lg-10 col-md-10 col-sm-10 col-10 p-1 h-50 btn btn-primary text-white'  type='button'  name='signup' id='signupbut' @click="signup()" >Sign Up</button>
 					</div>
 		
-					<div class='container '>
+					<!-- <div class='container '> -->
 						<div  class='row d-inline-flex w-100 h-50'>
 							<div class='col col-lg-6 col-md-6 col-sm-6 ' >
 								<h6 >Already signed up?</h6>
@@ -58,8 +58,8 @@
 								<p >Click here to <a href='<?php echo $PATH ?>authlogin.php'>Login</a></p>  
 							</div>
 						</div>
-					</div>
-				</div>
+					<!-- </div> -->
+				<!-- </div> -->
 			</div>
 		</main>
 	</form>

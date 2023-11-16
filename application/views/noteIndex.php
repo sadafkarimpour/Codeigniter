@@ -9,7 +9,7 @@
 </style> -->
 
 
-<div id="App" class="container-fluid text-center" >
+<div id="App" class="container text-center " >
 	<form action="" method="POST">
 
 		<div class='row mt-3 p-1 d-none alert alert-success alert-dismissible' id='success' >
@@ -23,86 +23,59 @@
 			</div>
 		</div>
 		
-
-
-		<div :style="{height:isheight+'px'}" class="container-fluid mb-4 text-white rounded d-inline-block align-middle align-self-center align-items-center justify-content-center" style="width:1300px">
-			<div class="row w-100 h-75 align-items-center  justify-content-center">
-				<div class="col col-lg-11 col-md-11 col-sm-11  h-100 bg-dark p-4">
-					<div class='container-fluid w-100  d-flex align-items-center justify-content-center' >
-						<div class="row w-100 ">
-							<h2 class="col col-lg-12 col-md-12 col-sm-12 p-1 bg-primary">
+			
+		<div  class="row mb-4 text-white rounded  align-items-center ">
+			<!-- <div class="row w-100 h-75 align-items-center  justify-content-center"> -->
+				<div class="col col-lg-12 col-md-12 col-sm-12 bg-dark p-4">
+					<div class='row' >
+							<h2 class="col col-lg-12 col-md-12 col-sm-12 bg-primary">
 								<?php
 								echo $usid."یادداشت های";
 								?>
 							</h2>
-						</div>
+						
 					</div>
-					<div class='container-fluid w-100 h-100  d-flex align-items-center justify-content-center' >
-						<div class='row w-100 h-100'>
-							<div class="col col-lg-5 col-md-5 col-sm-5 col-12 h-100 pb-5"   >
+					<div class='row' >
+							<div class="col col-lg-5 col-md-5 col-sm-12 col-12"   >
 							<!-- base_url for image url -->
 								<img  src="<?php echo $base_url?>" alt="" class="w-100 h-100" >
 							</div>
 	
 		
 	
-							<div  class="col col-lg-7 col-md-7 col-sm-7 col-12 text-white d-flex align-self-start justify-content-end" >
-								<div class="container-fluid w-100 h-100">
-									<div class="row w-100 h-100">
-										<table>
-											<tr>
-												<div class="col col-lg-2 col-md-2 col-sm-2 p-2 m-2 text-white" >
+							<div  class="col col-lg-7 col-md-7 col-sm-12 col-12 text-white " >
+										<table class="w-100">
+											<thead>
+												<tr>
 													<th style="border:1px solid white " >شماره</th>
-												</div>
-											
-												<div class="col col-lg-2 col-md-2 col-sm-2 p-2 m-2 text-white" >
 													<th  style="border:1px solid white ">تاریخ</th>
-												</div>
-
-												<div class="col col-lg-2 col-md-2 col-sm-2 p-2 m-2 text-white">
 													<th style="border:1px solid white ">عنوان</th>
-												</div >
-
-												<div class="col col-lg-2 col-md-2 col-sm-2 p-2 m-2 text-white" >
 													<th style="border:1px solid white ;" >متن</th>
-												</div>
-												<div class="col col-lg-2 col-md-2 col-sm-2 p-2 m-2 text-white" >
-													<th style="border:1px solid white ; ">حذف / ویرایش</th>
-												</div>
+													<th style="border:1px solid white ; ">حذف / ویرایش</th>													
 												</tr>
-											<?php 
+											</thead>
 
-										
-
-
-											$num_page=4;
-											
-											if($page1){
-												$page=$page1;
-											}
-											else{
-												$page=1;
-											}
-											
-
-
-											$numRows = 0;
-											
-											$c = &get_instance();
-											$c->load->model('Notemodel');
-										
-											$notes=$c->Notemodel->find($usid, $page, $num_page, $numRows);
-
-											// print_r("notes:<hr/>");
-											// print_r($notes);
-											
-											
-											
-										
+											<tbody>
 												
+												<?php 
+
+												$num_page=4;
+
+												if($page1){
+													$page=$page1;
+												}
+												else{
+													$page=1;
+												}
+
+												$numRows = 0;
+
+												$c = &get_instance();
+												$c->load->model('Notemodel');
+
+												$notes=$c->Notemodel->find($usid, $page, $num_page, $numRows);
+
 												?>
-										
-											
 												<tr v-for="note in notes"  style='border:1px solid white ; color:white;text-align:center;'>
 													<td style='border:1px solid white ; color:white;text-align:center;justify-content:center;'><div  class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100 ' v-html="note.id" ></div></td>
 													<td   style='border:1px solid white ; color:white;justify-content:center;text-align:center'><div class='col-lg-2 col-md-2 col-sm-1 p-1 m-2 w-100 text-justify text-center' v-html="note.datetime_created "></div></td>
@@ -118,53 +91,71 @@
 														</div>
 														<div v-else class='col-lg-2 col-md-2 col-sm-1 p-2 m-2 w-100' v-html="note.description" style="justify-content:center;text-align:center; display: block; overflow-y: scroll;padding: 5px;height: 95px"></div>
 													</td>
-													<td>
+													<td >
 														<div  class='btn-group'>
-															<a v-if="editing &&  note.id == editId"  @click="doedit(editing)" class='btn btn-primary' >ثبت</a>
-															<a v-else  @click="edit(note)" class='btn btn-primary'>ویرایش</a>
-															<a class='btn btn-danger' @click="deletebut(note.id)">حذف</a>
+															<div v-if="editing && note.id == editId">		
+															<a   @click="doedit(editing)" class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-primary' >ثبت</a>
+															<a   @click="returnbut()" class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-danger' >بازگشت</a>
+															</div>
+															<div v-else>
+																<a  @click="edit(note)" class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-primary'>ویرایش</a>
+																<a  class='col col-lg-6 col-md-6 col-sm-6 col-6 p-2 btn btn-danger' @click="deletebut(note.id)">حذف</a>
+															</div>
+															
 														</div>
 													</td>
-												</tr>
+													</tr>
+											</tbody>
+											
+										
+											
+												
 										</table>
 									</div>
 								</div>
-							</div>
-							<!-- add note form -->
-							<div class="modal container-fluid d-flex align-items-center justify-content-center" id="Appadd"  v-if="open" style="width:550px;height:300px;">
-								<form action="" method="POST" id="addform" class="row w-100 h-100 align-items-center" >
-										<div  class='col w-100 h-75  bg-dark text-white rounded' >
-											<div class="container-fluid d-flex align-items-center justify-content-center " >
-												<div class="row w-100 h-100 align-items-center">
-													<input id="title" v-model="titled"  type="text" placeholder="عنوان یادداشت" name="data[title]" class="col col-lg-10 col-md-10 col-sm-10 p-1 m-2 h-25" >
-												</div>
-											</div>
-											<div class="container-fluid d-flex align-items-center justify-content-center ">
-												<div class="row w-100 h-100 align-items-center">
-													<input id="note" v-model="noted" type="text" placeholder="متن یادداشت" name="data[note]"  class="col col-lg-10 col-md-10 col-sm-10 p-1 m-2 h-25">
-												</div>
-											</div>
-											<div class="container-fluid d-flex align-items-center justify-content-center" style="padding-left: 120px;">
-												<div class="row w-100 h-100 align-items-center">
-													<button class="btn btn-primary  col col-lg-5 col-md-5 col-sm-5 p-1 m-1" type="button" name="save" id="save" @click="savebut()" >Save</button>
-													<button class="btn btn-outline-primary col col-lg-5 col-md-5 col-sm-5 p-1 m-1 " type="button" name="return" id="return" @click="returnbut()" >Return</button>
-												</div>
-											</div>
-									</div>
-								</form>
-							</div>
-							<!-- add note form -->
-						
+							</div>					
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row mt-3" >
-				<div  class='col col-lg-4 col-md-4 col-sm-4' >
-					<button @click="addnote()"   class='w-70 h-70 col-lg-6 col-md-3 col-sm-1 p-1   btn btn-primary text-white' style="margin-left:60px"   type='button'  name='addnew' id='addnew' >Add New</button>
+					
+			<div class="row" >
+				<div  class='col col-lg-4 col-md-4 col-sm-4 col-4 ' >
+					<button  class='w-75 col-lg-4 col-md-4 col-sm-4 col-4 p-1 btn btn-primary text-white' type='button' data-toggle="modal" data-target="#exampleModal"  name='addnew' >Add New</button>
 					<!-- onclick="addnotes();" -->
 				</div>
-				<div class="col col-lg-8 col-md-8 col-sm-8 ">
+				<!-- add note form -->
+				<form action="" method="POST" id="addform" >
+					<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"   >
+						<div class="modal-dialog "  role="document">
+							<div  class='modal-content border-0  bg-light text-dark rounded' >
+								<div class="modal-header border-0">
+									<h5 class="modal-title text-primary" id="exampleModalLabel">Add Note</h5>
+									<button type="button" class="close bg-light border-0 text-primary h4" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body border-0">
+									<div class="border-0 " >
+										<div class="modal-title w-100 h-100 " id="exampleModalLabel">
+											<input id="title" v-model="titled"  type="text" placeholder="عنوان یادداشت" name="data[title]" class="col col-lg-11 col-md-11 col-sm-11 col-11 p-2 mb-2 h-25 modal-title  border-bottom-2 border-primary text-dark rounded" >
+										</div>
+									</div>
+									<div class="border-0">
+										<div class="w-100 h-100">
+											<input id="note" v-model="noted" type="text" placeholder="متن یادداشت" name="data[note]"  class="col col-lg-11 col-md-11 col-sm-11 col-11 p-2 h-25  border-bottom-2 border-primary text-dark rounded">
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer border-0" >
+									<div class="w-100 h-100">
+										<button class="btn btn-primary  col col-lg-5 col-md-5 col-sm-5 col-5 p-1 m-1" type="button" name="save" id="save" @click="savebut()" >Save</button>
+										<button class="btn btn-outline-primary col col-lg-5 col-md-5 col-sm-5 col-5 p-1 m-1"  type="button" name="return" id="return"  data-dismiss="modal" >Return</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- add note form -->	
+				<div class="col col-lg-8 col-md-8 col-sm-8 col-8 ">
 					<?php 
 						
 			
@@ -173,7 +164,7 @@
 					// $total=mysqli_num_rows($sql_result);
 					// $total_pages=ceil($total/$num_page);
 					$start=1;$end=$numRows;$pre=0;$next=0;
-					echo '<a href ="'. $PATH .'note/index?page=' . $start . '" class="col-lg-1 p-2 mt-2  border border-primary rounded-circle bg-primary text-white" style="margin-right:5px;text-decoration:none;margin-left:370px">Start </a>';
+					echo '<a href ="'. $PATH .'note/index?page=' . $start . '" class="col-lg-2 col-md-2 col-sm-2 p-2 border border-primary rounded-circle bg-primary text-white" style="text-decoration:none">Start </a>';
 
 						if ($page==$start){
 							$pre=$page;
@@ -189,23 +180,24 @@
 								$next=$page+1;
 							}
 						
-							echo '<a href ="'. $PATH .'note/index?page=' . $pre . '" class="col-lg-1 p-2 mt-2 border border-primary rounded-circle bg-primary text-white" style="margin-right:5px;text-decoration:none">Pre </a>';
+							echo '<a href ="'. $PATH .'note/index?page=' . $pre . '" class="col-lg-2  col-md-2 col-sm-2 p-2 border border-primary rounded-circle bg-primary text-white" style="margin-right:5px;text-decoration:none">Pre </a>';
 
-							echo '<a href ="'. $PATH .'note/index?page=' . $page . '" class="col-lg-1 p-2 mt-2  border border-primary rounded-circle bg-primary text-white" style="margin-right:5px;text-decoration:none">' . $page . ' </a>';
+							echo '<a href ="'. $PATH .'note/index?page=' . $page . '" class="col-lg-2  col-md-2 col-sm-2 p-2  border border-primary rounded-circle bg-primary text-white" style="margin-right:5px;text-decoration:none">' . $page . ' </a>';
 						
-							echo '<a href ="'. $PATH .'note/index?page=' . $next . '" class="col-lg-1 p-2 mt-2 border border-primary rounded-circle  bg-primary text-white" style="margin-right:5px;text-decoration:none">Next</a>';
+							echo '<a href ="'. $PATH .'note/index?page=' . $next . '" class="col-lg-2 col-md-2 col-sm-2 p-2 border border-primary rounded-circle  bg-primary text-white" style="margin-right:5px;text-decoration:none">Next</a>';
 
 						
 
-						echo '<a href ="'. $PATH .'note/index?page=' . $end . '" class="col-lg-1 p-2 mt-2  border border-primary rounded-circle bg-primary text-white" style="margin-right:5px;text-decoration:none">End</a>';
+						echo '<a href ="'. $PATH .'note/index?page=' . $end . '" class="col-lg-2 col-md-2 col-sm-2 p-2  border border-primary rounded-circle bg-primary text-white" style="margin-right:5px;text-decoration:none">End</a>';
 				
 					
 					?>
 			
 			
 				</div>
-			</div>			
-		</div>
+			</div>	
+								
+	
 	</form>
 </div>
 
@@ -300,7 +292,6 @@
 			},
 		    addnote(){
 				this.open=true
-				this.isheight=this.isheight+150
 
 			},
 			savebut(){
@@ -315,6 +306,7 @@
 					data:{
 							title:this.titled,
 							note:this.noted,  
+							
 					},
 				// dataType:'json',
 					success: (dataResult)=>{
@@ -363,22 +355,8 @@
 						});
 					},
 			returnbut(){
-				$.ajax({
-					url:"<?php echo $PATH?>note/index",
-					type:"GET",
-					success: function(r) 
-			{
-				if(data.statusCode==200){
-					$('#success').show();
-					$('#success').html('note deleted successfuly'); 
-					this.getlist();
-					}
-					else if(data.statusCode==201){
-						$('#error').show();
-						$('#error').html('sth went wronge')
-					}
-				}
-			});
+			this.editing=false
+			this.open=false
 
 		}		
 			}

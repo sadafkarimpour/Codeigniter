@@ -2,21 +2,21 @@
 
 <div id="App" class="container-fluid text-center" >
 
-	<div class='row mt-3 p-1 d-none alert alert-success alert-dismissible' id='success' >
-		<div class="col">
+	<div class='row text-center alert alert-success alert-dismissible' id='success' style="display: none;" >
+		<div class="col col-lg-12 col-md-12 col-sm-12 col-12 text-center">
 			<a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a>
 		</div>
 	</div>
-	<div class='row mt-3 p-1 d-none alert alert-danger alert-dismissible' id='error' >
-		<div class="col">
+	<div class='row text-center alert alert-danger alert-dismissible' id='error' style="display: none;" >
+		<div class="col col-lg-12 col-md-12 col-sm-12 col-12 text-center">
 			<a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a>
 		</div>
 	</div>
 
-	<form  method='POST' action='' autocomplete='off' id='loginform' class="container d-flex align-items-center justify-content-center" style="width:500px;height:600px" >
+	<form  method='POST' action='' autocomplete='off' id='loginform' class="container align-items-center justify-content-center" style="width:500px" >
 			<main class="row w-100 h-100 align-items-center" >
 				<div class='col w-100  h-50  bg-dark text-white rounded' >
-						<div class='container w-100 h-25 d-flex align-items-center justify-content-center'>
+						<div class=' w-100 h-25 d-flex align-items-center justify-content-center'>
 								<div class='row w-100 h-25 align-items-center'>
 										<p  class='col col-lg-12 col-md-12 col-sm-12 p-1 m-12'>
 										Login
@@ -37,7 +37,7 @@
 								<button @click="loginmsg()" class='col col-lg-9 col-md-9 col-sm-9 col-9 p-1 mb-4   btn btn-primary text-white'  type='button'  name='login' id='loginbut'  >Login</button>
 						</div>
 		
-						<div class='container' >
+						<!-- <div class='container' > -->
 								<div  class='row  w-100 d-flex justify-content-center'>
 										<div class='col col-lg-6 col-md-6 col-sm-6 col-6 d-flex justify-content-end  '>
 												<h6 class="textsize" >Not registered?</h6>
@@ -46,7 +46,7 @@
 												<p class="textsize" >Click here to <a href='<?php echo $PATH ?>auth/register'>Sign Up</a></p>  
 										</div>
 								</div>
-						</div>
+						<!-- </div> -->
 				</div>
 			</main>
 	</form>
