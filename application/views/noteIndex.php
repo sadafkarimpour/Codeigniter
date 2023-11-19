@@ -54,7 +54,7 @@
 										</div>
 									
 								</nav>
-								<div class="table-responsive">
+								<div class="table-responsive-lg table-responsive-md table-responsive-sm table-responsive">
 								<table class="w-100">
 									<thead>
 										<tr>
@@ -105,11 +105,11 @@
 											<td >
 												<div  class='btn-group'>
 													<div v-if="editing && note.id == editId">		
-													<a   @click="doedit(editing)" class=' p-2 btn btn-primary' >ثبت</a>
+													<a   @click="doedit(editing)" class='m-1 p-2 btn btn-primary' >ثبت</a>
 													<a   @click="returnbut()" class=' p-2 btn btn-danger' >بازگشت</a>
 													</div>
 													<div v-else>
-														<a  @click="edit(note)" class=' p-2 btn btn-primary'>ویرایش</a>
+														<a  @click="edit(note)" class='m-1 p-2 btn btn-primary'>ویرایش</a>
 														<a  @click="deletebut(note.id)"  class=' p-2 btn btn-danger'>حذف</a>
 													</div>
 													
